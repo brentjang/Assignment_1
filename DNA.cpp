@@ -17,6 +17,8 @@ DNA::~DNA()
 {
 	cout << "deleted" << endl;
 }
+
+//takes user input and checks if the input corresponds to a real file
 bool DNA::setFile()
 {
     cout << "Please enter a file name [include extension .txt] ((or 'quit' to exit)): ";
@@ -31,10 +33,14 @@ bool DNA::setFile()
         return false;
     }
 }
+
+//return file name
 string DNA::getFileName()
 {
     return fileName;
 }
+
+//clears all variables for multiple files
 void DNA::clearAll()
 {
     countA = 0;
@@ -65,6 +71,8 @@ void DNA::clearAll()
     std = 0;
     fileName = "";
 }
+
+//calculates the number of lines in the file
 void DNA::lengthCalc()
 {
     ifstream file;
@@ -79,19 +87,27 @@ void DNA::lengthCalc()
     }
     file.close();
 }
+
+//return the number of lines
 double DNA::countLines()
 {
     return double(lines);
 }
+
+//returns the sum of characters in lines
 double DNA::sumLength()
 {
     return double(sum);
 }
+
+//calculates and returns the mean length of lines
 double DNA::meanLength()
 {
     mean = double(sum)/double(lines);
     return mean;
 }
+
+//calculates and returns the variance for length of lines
 double DNA::varianceLength()
 {
     int topSum = 0;
@@ -106,11 +122,15 @@ double DNA::varianceLength()
     file.close();
     return variance;
 }
+
+//calculates and returns the standard deviation for length of lines
 double DNA::stdLength()
 {
     std = sqrt(variance);
     return std;
 }
+
+//counts each valid nucleotide and stores the counts
 void DNA::countOne()
 {
     ifstream file;
@@ -147,6 +167,7 @@ void DNA::countOne()
                 tempCountG++;
             }
         }
+        //checks for invalid characters/empty lines and throws out line
         if (tempSum != line.size() && line.size() > 0)
         {
             lines--;
@@ -168,6 +189,8 @@ void DNA::countOne()
     probC = (double)countC/sum;
     file.close();
 }
+
+//counts each pair of nucleotides and stores the counts
 void DNA::countPair()
 {
     ifstream file;
@@ -278,8 +301,10 @@ void DNA::countPair()
                 tempCountTC++;
             }
         }
+        //checks for invlid pairs/empty lines and throws out the line
         if(line.size()%2 == 0 && line.size() > 0)
         {
+            //for even length lines
             if(line.size()/2 == tempCount)
             {
                 pairCount += tempCount;
@@ -303,6 +328,7 @@ void DNA::countPair()
         }
         else if(line.size()%2 == 1)
         {
+            //for odd length lines
             if((line.size()-1)/2 == tempCount)
             {
                 pairCount += tempCount;
@@ -327,6 +353,8 @@ void DNA::countPair()
     }
     file.close();
 }
+
+//writes the summary of given text file to "brentjang.out.txt"
 void DNA::printSummary()
 {
     string outName = "brentjang.out.txt";
@@ -361,6 +389,8 @@ void DNA::printSummary()
     printFile << "The probability of CC's is: " << 100*double(countCC)/pairCount << endl;
     printFile.close();
 }
+
+//appends 1000 strands to the text file based on probabilities calculated above
 void DNA::appendLines()
 {
     string outName = "brentjang.out.txt";
@@ -373,6 +403,7 @@ void DNA::appendLines()
         float c = sqrt(-2 * log(rand1)) * cos(2 * M_PI * rand2);
         int strandLength = (std * c) + mean;
         string newStrand = "";
+        //checks for >0 strand length
         if(strandLength >= 1)
         {
             for(int j = 0; j < strandLength; j++)
