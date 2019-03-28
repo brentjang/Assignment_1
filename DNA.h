@@ -1,4 +1,4 @@
-#include <iostream> 
+#include <iostream>
 
 using namespace std;
 
@@ -40,7 +40,7 @@ private:
 public:
   DNA();
   ~DNA();
-  bool setFile();
+  bool setFile(string name);
   string getFileName();
   void lengthCalc();
   double sumLength();

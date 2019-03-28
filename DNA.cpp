@@ -5,7 +5,6 @@
 #include <cctype>
 #include <string>
 #include <algorithm>
-#include <cstdlib>
 
 using namespace std;
 
@@ -19,11 +18,9 @@ DNA::~DNA()
 }
 
 //takes user input and checks if the input corresponds to a real file
-bool DNA::setFile()
+bool DNA::setFile(string name)
 {
-    cout << "Please enter a file name [include extension .txt] ((or 'quit' to exit)): ";
-    cin >> fileName;
-    ifstream file(fileName);
+    ifstream file(name);
     if(file.good())
     {
         return true;
